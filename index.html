@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thailand Golf 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ====== THEME ====== */
+:root {
+  --jade: #0d4f3c;
+  --jade-dark: #073026;
+  --gold: #c9a55c;
+  --gold-soft: #e2c87f;
+  --cream: #fbf6e9;
+  --sand: #f4e4bc;
+  --ink: #1f2622;
+  --ink-soft: #4a5751;
+  --line: #e6dcc4;
+  --shadow: 0 6px 24px rgba(13,79,60,.10);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.55;
+  min-height: 100vh;
+}
+h1, h2, h3, h4 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--jade-dark);
+  letter-spacing: .01em;
+  font-weight: 600;
+  margin: 0 0 .5em;
+}
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
+h3 { font-size: 1.25rem; }
+a { color: var(--jade); }
+
+/* ====== PASSWORD GATE ====== */
+#gate {
+  position: fixed; inset: 0;
+  background: linear-gradient(135deg, var(--jade-dark), var(--jade) 60%, #1d6b51);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; padding: 24px;
+}
+#gate .gate-card {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 36px 32px;
+  max-width: 380px; width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
+  border: 1px solid var(--line);
+}
+#gate h1 { color: var(--jade-dark); margin-bottom: .2em; }
+#gate p { color: var(--ink-soft); margin: 0 0 18px; }
+#gate input {
+  width: 100%; padding: 12px 14px; font-size: 16px;
+  border: 1px solid var(--line); border-radius: 8px;
+  font-family: inherit; background: white;
+  margin-bottom: 12px;
+}
+#gate input:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
+#gate button {
+  width: 100%; padding: 12px; font-size: 16px; font-weight: 600;
+  background: var(--jade); color: white;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-family: inherit;
+  transition: background .15s;
+}
+#gate button:hover { background: var(--jade-dark); }
+#gate .gate-error {
+  color: #b8423a; font-size: 14px; min-height: 1.2em; margin-top: 4px;
+}
+#gate .gate-icon { font-size: 0; margin: 0 auto 12px; width: 56px; height: 56px; display: block; }
+
+/* ====== HEADER ====== */
+.site-header {
+  background: linear-gradient(135deg, var(--jade-dark), var(--jade));
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.site-header::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(201,165,92,.15), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(201,165,92,.12), transparent 45%);
+  pointer-events: none;
+}
+.site-header .inner {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 56px 24px 36px;
+  text-align: center;
+}
+.site-header h1 {
+  color: var(--cream);
+  margin: 0 0 .15em;
+}
+.site-header .tagline {
+  color: var(--gold-soft);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  letter-spacing: .04em;
+}
+.site-header .meta {
+  margin-top: 14px;
+  font-size: .95rem;
+  color: rgba(251,246,233,.85);
+}
+.palms {
+  position: absolute; bottom: -2px; left: 0; right: 0;
+  width: 100%; height: 50px;
+  fill: var(--cream);
+}
+
+/* ====== NAV ====== */
+nav.tabs {
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 50;
+  box-shadow: 0 2px 8px rgba(13,79,60,.04);
+}
+nav.tabs .tab-row {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  padding: 0 8px;
+}
+nav.tabs button {
+  background: none; border: none; cursor: pointer;
+  padding: 14px 18px; font-size: .95rem; font-weight: 500;
+  color: var(--ink-soft); font-family: inherit;
+  border-bottom: 3px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+nav.tabs button:hover { color: var(--jade); }
+nav.tabs button.active {
+  color: var(--jade-dark);
+  border-bottom-color: var(--gold);
+  font-weight: 600;
+}
+
+/* ====== MAIN ====== */
+main {
+  max-width: 1100px; margin: 0 auto;
+  padding: 36px 24px 80px;
+}
+section.view { display: none; animation: fade .25s ease; }
+section.view.active { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: none; } }
+
+/* ====== CARD ====== */
+.card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+}
+.card + .card { margin-top: 16px; }
+
+/* ====== OVERVIEW ====== */
+.overview-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 16px;
+}
+.stat {
+  background: white; border: 1px solid var(--line);
+  border-radius: 12px; padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+.stat .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 700;
+  color: var(--jade-dark); line-height: 1;
+}
+.stat .lbl {
+  font-size: .82rem; color: var(--ink-soft);
+  text-transform: uppercase; letter-spacing: .08em;
+  margin-top: 6px;
+}
+.lead {
+  font-size: 1.1rem; color: var(--ink-soft);
+  max-width: 720px;
+}
+.hotel-strip {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 24px;
+}
+.hotel-strip .hotel {
+  background: white; border-radius: 12px; padding: 18px 20px;
+  border: 1px solid var(--line); box-shadow: var(--shadow);
+  border-left: 4px solid var(--gold);
+}
+.hotel .city { font-size: .8rem; color: var(--gold); text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
+.hotel h3 { margin: 4px 0 6px; }
+.hotel .dates { color: var(--ink-soft); font-size: .9rem; }
+.hotel .conf { font-size: .85rem; color: var(--ink-soft); margin-top: 6px; }
+.hotel .conf strong { color: var(--ink); font-family: ui-monospace, Menlo, monospace; }
+
+/* ====== ITINERARY ====== */
+.day {
+  background: white; border-radius: 12px;
+  padding: 20px 24px; margin-bottom: 14px;
+  border: 1px solid var(--line); box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.day .date {
+  border-right: 1px solid var(--line);
+  padding-right: 16px;
+}
+.day .date .dow {
+  font-size: .8rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--gold); font-weight: 600;
+}
+.day .date .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; line-height: 1;
+  color: var(--jade-dark); font-weight: 700;
+}
+.day .date .mon {
+  font-size: .85rem; color: var(--ink-soft); margin-top: 2px;
+}
+.day .items { display: grid; gap: 12px; }
+.day .item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 14px;
+  align-items: baseline;
+}
+.day .item .time {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: .85rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+.day .item .label { font-weight: 600; color: var(--ink); }
+.day .item .detail { color: var(--ink-soft); font-size: .92rem; margin-top: 2px; }
+.day .item.golf .label::before {
+  content: '⛳';
+  display: inline-block;
+  margin-right: 6px;
+}
+.day .item.travel .label::before {
+  content: '✈';
+  display: inline-block;
+  margin-right: 6px;
+  color: var(--gold);
+}
+.day .item.hotel .label::before {
+  content: '◆';
+  display: inline-block;
+  margin-right: 6px;
+  color: var(--gold);
+}
+
+@media (max-width: 600px) {
+  .day { grid-template-columns: 1fr; gap: 8px; }
+  .day .date { border-right: none; border-bottom: 1px solid var(--line); padding: 0 0 10px; display: flex; align-items: baseline; gap: 10px; }
+  .day .date .num { font-size: 1.8rem; }
+  .day .item { grid-template-columns: 70px 1fr; }
+}
+
+/* ====== PLAYERS ====== */
+.player-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  margin-top: 16px;
+}
+.player {
+  background: white; border-radius: 12px;
+  border: 1px solid var(--line);
+  padding: 20px; box-shadow: var(--shadow);
+  text-align: center;
+}
+.avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--jade), var(--jade-dark));
+  color: var(--gold-soft);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+  border: 2px solid var(--gold);
+}
+.player h3 { margin: 0 0 4px; }
+.player .role { font-size: .82rem; color: var(--gold); text-transform: uppercase; letter-spacing: .08em; }
+.player .flights {
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: .88rem; color: var(--ink-soft);
+  text-align: left;
+}
+.player .flights .row {
+  display: flex; justify-content: space-between; gap: 8px;
+  padding: 4px 0;
+}
+.player .flights .row strong { color: var(--ink); }
+.placeholder { color: #b89540; font-style: italic; }
+
+/* ====== WHERE SHOULD I BE ====== */
+.wsib-intro { text-align: center; max-width: 640px; margin: 0 auto 24px; }
+.wsib-pickers {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: center; margin-bottom: 32px;
+}
+.pick-btn {
+  background: white; border: 1px solid var(--line);
+  border-radius: 999px; padding: 10px 18px;
+  cursor: pointer; font-family: inherit;
+  font-size: .92rem; color: var(--ink);
+  display: flex; align-items: center; gap: 8px;
+  transition: all .15s;
+}
+.pick-btn:hover { border-color: var(--gold); transform: translateY(-1px); }
+.pick-btn.selected {
+  background: var(--jade); color: white;
+  border-color: var(--jade-dark);
+}
+.pick-btn .mini-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--jade); color: var(--gold-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700;
+  font-size: .9rem;
+}
+.pick-btn.selected .mini-avatar {
+  background: var(--gold); color: var(--jade-dark);
+}
+
+#wsib-result {
+  max-width: 640px; margin: 0 auto;
+  background: white; border-radius: 16px;
+  padding: 32px; border: 1px solid var(--line);
+  box-shadow: var(--shadow); display: none;
+}
+#wsib-result.show { display: block; }
+#wsib-result .greeting {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; color: var(--jade-dark);
+  margin-bottom: 4px;
+}
+#wsib-result .now-bar {
+  font-size: .82rem; color: var(--ink-soft);
+  text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 20px;
+}
+#wsib-result .status-block {
+  background: var(--cream);
+  border-left: 4px solid var(--gold);
+  padding: 16px 18px; border-radius: 8px;
+  margin-bottom: 14px;
+}
+#wsib-result .status-label {
+  font-size: .75rem; color: var(--gold); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; margin-bottom: 4px;
+}
+#wsib-result .status-text { font-size: 1.05rem; color: var(--ink); }
+#wsib-result .status-detail { color: var(--ink-soft); font-size: .92rem; margin-top: 4px; }
+#wsib-result .countdown {
+  text-align: center; padding: 20px;
+  background: linear-gradient(135deg, var(--jade), var(--jade-dark));
+  color: var(--cream); border-radius: 12px;
+  margin-bottom: 16px;
+}
+#wsib-result .countdown .num {
+  font-family: 'Cormorant Garamond', serif; font-size: 3rem;
+  color: var(--gold-soft); line-height: 1;
+}
+#wsib-result .countdown .lbl {
+  font-size: .82rem; text-transform: uppercase; letter-spacing: .12em;
+  margin-top: 6px;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  text-align: center; padding: 30px 20px;
+  color: var(--ink-soft); font-size: .82rem;
+  border-top: 1px solid var(--line);
+  background: white;
+}
+footer .conf { font-family: ui-monospace, Menlo, monospace; }
+
+</style>
+</head>
+<body>
+
+<!-- ============ PASSWORD GATE ============ -->
+<div id="gate">
+  <div class="gate-card">
+    <svg class="gate-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="20" r="12" fill="#fbf6e9" stroke="#0d4f3c" stroke-width="2"/>
+      <circle cx="28" cy="17" r="1.5" fill="#0d4f3c"/>
+      <circle cx="34" cy="19" r="1.5" fill="#0d4f3c"/>
+      <circle cx="30" cy="23" r="1.5" fill="#0d4f3c"/>
+      <line x1="32" y1="32" x2="32" y2="58" stroke="#0d4f3c" stroke-width="2"/>
+      <path d="M32 35 L48 39 L32 43 Z" fill="#c9a55c"/>
+    </svg>
+    <h1>Thailand 2027</h1>
+    <p>Eight golfers. One trip. Enter the password.</p>
+    <input id="gate-input" type="password" placeholder="Password" autocomplete="off" />
+    <button id="gate-btn">Enter</button>
+    <div class="gate-error" id="gate-error"></div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="inner">
+    <h1>Thailand Golf 2027</h1>
+    <div class="tagline">Bangkok &middot; Phuket &middot; Nine Rounds</div>
+    <div class="meta">January 10 – 21, 2027 &nbsp;·&nbsp; Booking LGTA-0264</div>
+  </div>
+  <svg class="palms" viewBox="0 0 1200 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,50 C200,10 400,40 600,20 C800,0 1000,40 1200,15 L1200,50 Z"/>
+  </svg>
+</header>
+
+<!-- ============ NAV ============ -->
+<nav class="tabs">
+  <div class="tab-row">
+    <button class="tab-btn active" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="itinerary">Itinerary</button>
+    <button class="tab-btn" data-tab="players">Players</button>
+    <button class="tab-btn" data-tab="wsib">Where Should I Be?</button>
+  </div>
+</nav>
+
+<!-- ============ MAIN ============ -->
+<main>
+
+  <!-- OVERVIEW -->
+  <section class="view active" id="overview">
+    <h2>The Trip</h2>
+    <p class="lead">Twelve days, two cities, nine rounds of championship golf — from Bangkok's coveted courses to Phuket's mountain layouts. Organized by Luxury Golf Tours Asia.</p>
+
+    <div class="overview-grid">
+      <div class="stat"><div class="num">8</div><div class="lbl">Golfers</div></div>
+      <div class="stat"><div class="num">12</div><div class="lbl">Days</div></div>
+      <div class="stat"><div class="num">9</div><div class="lbl">Rounds</div></div>
+      <div class="stat"><div class="num">2</div><div class="lbl">Cities</div></div>
+    </div>
+
+    <h2 style="margin-top:40px">Where We Stay</h2>
+    <div class="hotel-strip">
+      <div class="hotel">
+        <div class="city">Bangkok · Jan 10–15</div>
+        <h3>Shangri-La Hotel</h3>
+        <div class="dates">5 nights · Deluxe River × 8</div>
+        <div class="conf">Confirmation <strong>11989740</strong></div>
+      </div>
+      <div class="hotel">
+        <div class="city">Phuket · Jan 15–21</div>
+        <h3>Andara Resort Villas, Kamala</h3>
+        <div class="dates">6 nights · 4-bedroom Pool Villa × 2</div>
+        <div class="conf">Confirmation <strong>556869798</strong></div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:40px">The Courses</h2>
+    <div class="hotel-strip">
+      <div class="hotel"><div class="city">Bangkok</div><h3>Nikanti</h3><div class="dates">Best Golf Experience in Asia 2019</div></div>
+      <div class="hotel"><div class="city">Bangkok</div><h3>Alpine Bangkok</h3><div class="dates">Coveted championship layout</div></div>
+      <div class="hotel"><div class="city">Bangkok</div><h3>Robinswood</h3><div class="dates">Reignwood private club</div></div>
+      <div class="hotel"><div class="city">Bangkok</div><h3>Amata Springs</h3><div class="dates">Most luxurious in Asia</div></div>
+      <div class="hotel"><div class="city">Phuket</div><h3>Blue Canyon — Canyon</h3><div class="dates">Johnnie Walker Classic host (×3)</div></div>
+      <div class="hotel"><div class="city">Phuket</div><h3>Red Mountain</h3><div class="dates">Asia's Best Course 2014</div></div>
+      <div class="hotel"><div class="city">Phuket</div><h3>Laguna Phuket</h3><div class="dates">Par-71 lagoon course</div></div>
+    </div>
+  </section>
+
+  <!-- ITINERARY -->
+  <section class="view" id="itinerary">
+    <h2>Day by Day</h2>
+    <p class="lead">All hotel breakfasts included. Tee times to be confirmed. Caddy tips 400–500 THB per round.</p>
+    <div id="itinerary-list" style="margin-top:24px"></div>
+  </section>
+
+  <!-- PLAYERS -->
+  <section class="view" id="players">
+    <h2>The Group</h2>
+    <p class="lead">Flight details are placeholders — fill them in as bookings come together.</p>
+    <div class="player-grid" id="player-grid"></div>
+  </section>
+
+  <!-- WHERE SHOULD I BE -->
+  <section class="view" id="wsib">
+    <h2 style="text-align:center">Where Should I Be?</h2>
+    <p class="lead wsib-intro">Tap your name to see what's happening right now and what's next.</p>
+    <div class="wsib-pickers" id="wsib-pickers"></div>
+    <div id="wsib-result"></div>
+  </section>
+
+</main>
+
+<footer>
+  Trip ref <span class="conf">LGTA-0264</span> &nbsp;·&nbsp; Operator: Luxury Golf Tours Asia &nbsp;·&nbsp; <a href="mailto:booking@luxurygolftoursasia.com">booking@luxurygolftoursasia.com</a>
+</footer>
+
+<script>
+/* =================================================================
+   CONFIG — change the password here
+   ================================================================= */
+const SITE_PASSWORD = "phuket2027";
+
+/* =================================================================
+   PLAYERS — flight info uses placeholders. Update as flights are booked.
+   ================================================================= */
+const players = [
+  { id: 'vikas',   name: 'Vikas Patel',     initials: 'VP', flightIn: null, flightOut: null },
+  { id: 'ernie',   name: 'Ernie Ma',        initials: 'EM', flightIn: null, flightOut: null },
+  { id: 'tom',     name: 'Tom Kenny',       initials: 'TK', flightIn: null, flightOut: null },
+  { id: 'ken',     name: 'Ken Atkinson',    initials: 'KA', flightIn: null, flightOut: null },
+  { id: 'troy',    name: 'Troy Bullock',    initials: 'TB', flightIn: null, flightOut: null },
+  { id: 'lyle',    name: 'Lyle Pidzarko',   initials: 'LP', flightIn: null, flightOut: null },
+  { id: 'wayne',   name: 'Wayne Davidson',  initials: 'WD', flightIn: null, flightOut: null },
+  { id: 'sylvain', name: 'Sylvain Gamache', initials: 'SG', flightIn: null, flightOut: null },
+];
+
+/* Example of a populated flight, for when you're ready to fill in:
+   flightIn:  { date: '2027-01-10', time: '23:55', flight: 'CX 838', from: 'YVR', via: 'HKG' },
+   flightOut: { date: '2027-01-21', time: '14:20', flight: 'CX 654', to:   'YVR' }
+*/
+
+/* =================================================================
+   ITINERARY — items are 'travel', 'hotel', 'golf', or 'free'.
+   Time can be 'TBD' — it'll display gracefully.
+   ================================================================= */
+const itinerary = [
+  { date: '2027-01-10', items: [
+    { type:'travel', time:'TBD', label:'Arrive Bangkok (BKK)', detail:'Private transfer to hotel. Meet driver at exit/entrance 3 (right of customs).' },
+    { type:'hotel',  time:'14:00', label:'Check in: Shangri-La Bangkok', detail:'Deluxe River room. Confirmation 11989740.' },
+  ]},
+  { date: '2027-01-11', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Buffet included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Nikanti', detail:'Voted Best Golf Experience in Asia 2019. Buffet before & after included.' },
+  ]},
+  { date: '2027-01-12', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Buffet included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Alpine Bangkok', detail:'45 min from Suvarnabhumi. Picturesque hilly layout.' },
+  ]},
+  { date: '2027-01-13', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Buffet included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Robinswood', detail:'Reignwood\'s exclusive Thailand club, Pathum Thani.' },
+  ]},
+  { date: '2027-01-14', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Buffet included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Amata Springs', detail:'The most luxurious course in Asia.' },
+  ]},
+  { date: '2027-01-15', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Last morning in Bangkok.' },
+    { type:'hotel',  time:'12:00', label:'Check out Shangri-La', detail:'' },
+    { type:'travel', time:'TBD', label:'Transfer to BKK airport', detail:'~2hr 15min via private vehicle.' },
+    { type:'travel', time:'TBD', label:'Fly BKK → Phuket (HKT)', detail:'~1hr 15min. Domestic flight included.' },
+    { type:'hotel',  time:'TBD', label:'Check in: Andara Resort Villas', detail:'4-bedroom Pool Villa × 2. Confirmation 556869798.' },
+  ]},
+  { date: '2027-01-16', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Blue Canyon (Canyon)', detail:'Johnnie Walker Classic host 1994, 1998, 2007.' },
+  ]},
+  { date: '2027-01-17', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Red Mountain', detail:'Asia\'s Best Golf Course 2014. No water in carts — coupon for clubhouse.' },
+  ]},
+  { date: '2027-01-18', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Laguna Phuket', detail:'Par-71 lagoon course. Caddy tip 500 THB.' },
+  ]},
+  { date: '2027-01-19', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Blue Canyon (Canyon)', detail:'Second crack at the Canyon Course.' },
+  ]},
+  { date: '2027-01-20', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Red Mountain', detail:'Final round.' },
+  ]},
+  { date: '2027-01-21', items: [
+    { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Last morning.' },
+    { type:'hotel',  time:'12:00', label:'Check out Andara', detail:'' },
+    { type:'travel', time:'TBD', label:'Transfer to HKT airport', detail:'~45min. End of LGTA service.' },
+  ]},
+];
+
+/* =================================================================
+   PASSWORD GATE
+   ================================================================= */
+function unlockSite() {
+  const stored = sessionStorage.getItem('th2027_unlocked');
+  if (stored === '1') {
+    document.getElementById('gate').style.display = 'none';
+  }
+}
+function tryPassword() {
+  const input = document.getElementById('gate-input');
+  const err   = document.getElementById('gate-error');
+  if (input.value === SITE_PASSWORD) {
+    try { sessionStorage.setItem('th2027_unlocked', '1'); } catch(e){}
+    document.getElementById('gate').style.display = 'none';
+  } else {
+    err.textContent = 'Wrong password — try again.';
+    input.value = '';
+    input.focus();
+  }
+}
+document.getElementById('gate-btn').addEventListener('click', tryPassword);
+document.getElementById('gate-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryPassword();
+});
+unlockSite();
+setTimeout(() => document.getElementById('gate-input').focus(), 50);
+
+/* =================================================================
+   TABS
+   ================================================================= */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+/* =================================================================
+   RENDER ITINERARY
+   ================================================================= */
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DOWS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function fmtDate(iso) {
+  const [y,m,d] = iso.split('-').map(Number);
+  const dt = new Date(y, m-1, d);
+  return { dow: DOWS[dt.getDay()], num: d, mon: MONTHS[m-1] + ' ' + y };
+}
+function renderItinerary() {
+  const root = document.getElementById('itinerary-list');
+  root.innerHTML = itinerary.map(d => {
+    const f = fmtDate(d.date);
+    const items = d.items.map(it => `
+      <div class="item ${it.type}">
+        <div class="time">${it.time}</div>
+        <div>
+          <div class="label">${it.label}</div>
+          ${it.detail ? `<div class="detail">${it.detail}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+    return `
+      <div class="day">
+        <div class="date">
+          <div>
+            <div class="dow">${f.dow}</div>
+            <div class="num">${f.num}</div>
+            <div class="mon">${f.mon}</div>
+          </div>
+        </div>
+        <div class="items">${items}</div>
+      </div>
+    `;
+  }).join('');
+}
+renderItinerary();
+
+/* =================================================================
+   RENDER PLAYERS
+   ================================================================= */
+function fmtFlight(f, dir) {
+  if (!f) return `<span class="placeholder">TBD — add when booked</span>`;
+  const ep = dir === 'in' ? `from ${f.from}` : `to ${f.to}`;
+  const via = f.via ? ` via ${f.via}` : '';
+  return `<strong>${f.flight}</strong> ${ep}${via}<br><span style="color:var(--ink-soft)">${f.date} · ${f.time}</span>`;
+}
+function renderPlayers() {
+  const root = document.getElementById('player-grid');
+  root.innerHTML = players.map(p => `
+    <div class="player">
+      <div class="avatar">${p.initials}</div>
+      <h3>${p.name}</h3>
+      <div class="role">Golfer</div>
+      <div class="flights">
+        <div class="row"><span>Outbound</span><span style="text-align:right">${fmtFlight(p.flightIn, 'in')}</span></div>
+        <div class="row"><span>Return</span><span style="text-align:right">${fmtFlight(p.flightOut, 'out')}</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+renderPlayers();
+
+/* =================================================================
+   WHERE SHOULD I BE
+   ================================================================= */
+function renderWsibPickers() {
+  const root = document.getElementById('wsib-pickers');
+  root.innerHTML = players.map(p => `
+    <button class="pick-btn" data-id="${p.id}">
+      <span class="mini-avatar">${p.initials}</span>
+      <span>${p.name.split(' ')[0]}</span>
+    </button>
+  `).join('');
+  root.querySelectorAll('.pick-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      root.querySelectorAll('.pick-btn').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      showWsib(b.dataset.id);
+    });
+  });
+}
+renderWsibPickers();
+
+function dayDiff(a, b) {
+  // whole days between two YYYY-MM-DD strings (b - a)
+  const [ya,ma,da] = a.split('-').map(Number);
+  const [yb,mb,db] = b.split('-').map(Number);
+  const da_ms = Date.UTC(ya, ma-1, da);
+  const db_ms = Date.UTC(yb, mb-1, db);
+  return Math.round((db_ms - da_ms) / 86400000);
+}
+function todayISO() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+function findCurrentAndNext(today) {
+  const tripStart = itinerary[0].date;
+  const tripEnd   = itinerary[itinerary.length-1].date;
+  if (dayDiff(today, tripStart) > 0) return { phase: 'pre', daysOut: dayDiff(today, tripStart) };
+  if (dayDiff(tripEnd, today) > 0)   return { phase: 'post' };
+  // during trip — find today's items + tomorrow's first item
+  const todayDay = itinerary.find(d => d.date === today);
+  const idx = itinerary.findIndex(d => d.date === today);
+  const next = idx >= 0 && idx < itinerary.length-1 ? itinerary[idx+1] : null;
+  return { phase: 'during', todayDay, nextDay: next };
+}
+function showWsib(playerId) {
+  const player = players.find(p => p.id === playerId);
+  const out = document.getElementById('wsib-result');
+  const today = todayISO();
+  const ctx = findCurrentAndNext(today);
+  const first = player.name.split(' ')[0];
+
+  let html = `
+    <div class="greeting">Hi ${first} 👋</div>
+    <div class="now-bar">As of ${new Date().toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric', year:'numeric' })}</div>
+  `;
+
+  if (ctx.phase === 'pre') {
+    html += `
+      <div class="countdown">
+        <div class="num">${ctx.daysOut}</div>
+        <div class="lbl">Days until departure</div>
+      </div>
+      <div class="status-block">
+        <div class="status-label">First on the schedule</div>
+        <div class="status-text">Arrive Bangkok (BKK) — Sunday, January 10, 2027</div>
+        <div class="status-detail">Private transfer waiting at exit/entrance 3, right of customs. Check-in at Shangri-La Bangkok, Deluxe River room.</div>
+      </div>
+      <div class="status-block">
+        <div class="status-label">Before you go</div>
+        <div class="status-text">Confirm passport & flights</div>
+        <div class="status-detail">Passport must have 6+ months validity past Jan 21, 2027 and 2+ empty pages. No Thailand visa required. Complete the digital arrival card 3 days before flying.</div>
+      </div>
+    `;
+  } else if (ctx.phase === 'post') {
+    html += `
+      <div class="status-block">
+        <div class="status-label">Trip complete</div>
+        <div class="status-text">Welcome home.</div>
+        <div class="status-detail">Hope the rounds were good and the caddies were better.</div>
+      </div>
+    `;
+  } else {
+    // During trip
+    const now = new Date();
+    const hh = now.getHours();
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const nowStr = `${String(hh).padStart(2,'0')}:${mm}`;
+
+    // figure out current vs next item within today
+    const items = ctx.todayDay.items;
+    let current = null, upNext = null;
+    for (let i = 0; i < items.length; i++) {
+      const t = items[i].time;
+      if (t === 'TBD') continue;
+      if (t <= nowStr) current = items[i];
+      else { upNext = items[i]; break; }
+    }
+    if (!current && items.length) current = items[0];
+    if (!upNext) {
+      // pull tomorrow's first item
+      if (ctx.nextDay) {
+        const tf = fmtDate(ctx.nextDay.date);
+        upNext = { ...ctx.nextDay.items[0], _tomorrow: `${tf.dow} ${tf.num} ${tf.mon}` };
+      }
+    }
+
+    if (current) {
+      html += `
+        <div class="status-block">
+          <div class="status-label">Right now</div>
+          <div class="status-text">${current.label}</div>
+          ${current.detail ? `<div class="status-detail">${current.detail}</div>` : ''}
+        </div>
+      `;
+    }
+    if (upNext) {
+      html += `
+        <div class="status-block">
+          <div class="status-label">${upNext._tomorrow ? 'Tomorrow' : 'Up next today'}</div>
+          <div class="status-text">${upNext.time !== 'TBD' ? upNext.time + ' — ' : ''}${upNext.label}</div>
+          ${upNext.detail ? `<div class="status-detail">${upNext.detail}</div>` : ''}
+        </div>
+      `;
+    }
+  }
+
+  out.innerHTML = html;
+  out.classList.add('show');
+}
+</script>
+</body>
+</html>
