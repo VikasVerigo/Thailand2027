@@ -8,18 +8,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ====== THEME ====== */
+/* ====== THEME — Thai flag palette ======
+   Official Thai flag colors:
+   Red   #A51931   White #F4F5F8   Blue  #2D2A4A
+   We use blue as the primary deep tone, red as the accent.
+*/
 :root {
-  --jade: #0d4f3c;
-  --jade-dark: #073026;
-  --gold: #c9a55c;
-  --gold-soft: #e2c87f;
-  --cream: #fbf6e9;
-  --sand: #f4e4bc;
-  --ink: #1f2622;
-  --ink-soft: #4a5751;
-  --line: #e6dcc4;
-  --shadow: 0 6px 24px rgba(13,79,60,.10);
+  --jade: #2d2a4a;          /* primary navy (Thai flag blue) */
+  --jade-dark: #1a1830;     /* deeper navy */
+  --gold: #a51931;          /* Thai flag red, used as accent */
+  --gold-soft: #f4f5f8;     /* white-on-navy text accent */
+  --cream: #fbf8f3;         /* warm off-white background */
+  --sand: #f1e8d8;
+  --ink: #1c1c24;
+  --ink-soft: #4a4a5a;
+  --line: #e3dccd;
+  --shadow: 0 6px 24px rgba(45,42,74,.10);
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -45,7 +49,7 @@ a { color: var(--jade); }
 /* ====== PASSWORD GATE ====== */
 #gate {
   position: fixed; inset: 0;
-  background: linear-gradient(135deg, var(--jade-dark), var(--jade) 60%, #1d6b51);
+  background: linear-gradient(135deg, var(--jade-dark), var(--jade) 60%, #3d3a6a);
   display: flex; align-items: center; justify-content: center;
   z-index: 1000; padding: 24px;
 }
@@ -87,6 +91,13 @@ a { color: var(--jade); }
   position: relative;
   overflow: hidden;
 }
+.flag-stripes {
+  display: flex; height: 8px; width: 100%;
+}
+.flag-stripes span { display: block; flex: 1; }
+.flag-stripes .red   { background: #a51931; }
+.flag-stripes .white { background: #f4f5f8; }
+.flag-stripes .blue  { background: #2d2a4a; flex: 2; }
 .site-header::before {
   content: ''; position: absolute; inset: 0;
   background-image:
@@ -207,6 +218,22 @@ section.view.active { display: block; }
 .hotel .dates { color: var(--ink-soft); font-size: .9rem; }
 .hotel .conf { font-size: .85rem; color: var(--ink-soft); margin-top: 6px; }
 .hotel .conf strong { color: var(--ink); font-family: ui-monospace, Menlo, monospace; }
+.hotel h3 a, .day .item .label a {
+  color: inherit; text-decoration: none;
+  border-bottom: 1px dotted var(--gold);
+  transition: color .15s, border-color .15s;
+}
+.hotel h3 a:hover, .day .item .label a:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+  border-bottom-style: solid;
+}
+.hotel h3 a::after, .day .item .label a::after {
+  content: ' \2197';
+  font-size: .7em;
+  color: var(--gold);
+  opacity: .7;
+}
 
 /* ====== ITINERARY ====== */
 .day {
@@ -402,12 +429,12 @@ footer .conf { font-family: ui-monospace, Menlo, monospace; }
 <div id="gate">
   <div class="gate-card">
     <svg class="gate-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="32" cy="20" r="12" fill="#fbf6e9" stroke="#0d4f3c" stroke-width="2"/>
-      <circle cx="28" cy="17" r="1.5" fill="#0d4f3c"/>
-      <circle cx="34" cy="19" r="1.5" fill="#0d4f3c"/>
-      <circle cx="30" cy="23" r="1.5" fill="#0d4f3c"/>
-      <line x1="32" y1="32" x2="32" y2="58" stroke="#0d4f3c" stroke-width="2"/>
-      <path d="M32 35 L48 39 L32 43 Z" fill="#c9a55c"/>
+      <circle cx="32" cy="20" r="12" fill="#fbf8f3" stroke="#2d2a4a" stroke-width="2"/>
+      <circle cx="28" cy="17" r="1.5" fill="#2d2a4a"/>
+      <circle cx="34" cy="19" r="1.5" fill="#2d2a4a"/>
+      <circle cx="30" cy="23" r="1.5" fill="#2d2a4a"/>
+      <line x1="32" y1="32" x2="32" y2="58" stroke="#2d2a4a" stroke-width="2"/>
+      <path d="M32 35 L48 39 L32 43 Z" fill="#a51931"/>
     </svg>
     <h1>Thailand 2027</h1>
     <p>Eight golfers. One trip. Enter the password.</p>
@@ -419,6 +446,9 @@ footer .conf { font-family: ui-monospace, Menlo, monospace; }
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
+  <div class="flag-stripes" aria-hidden="true">
+    <span class="red"></span><span class="white"></span><span class="blue"></span><span class="white"></span><span class="red"></span>
+  </div>
   <div class="inner">
     <h1>Thailand Golf 2027</h1>
     <div class="tagline">Bangkok &middot; Phuket &middot; Nine Rounds</div>
@@ -458,13 +488,13 @@ footer .conf { font-family: ui-monospace, Menlo, monospace; }
     <div class="hotel-strip">
       <div class="hotel">
         <div class="city">Bangkok · Jan 10–15</div>
-        <h3>Shangri-La Hotel</h3>
+        <h3><a href="https://www.shangri-la.com/bangkok/shangrila/" target="_blank" rel="noopener">Shangri-La Hotel</a></h3>
         <div class="dates">5 nights · Deluxe River × 8</div>
         <div class="conf">Confirmation <strong>11989740</strong></div>
       </div>
       <div class="hotel">
         <div class="city">Phuket · Jan 15–21</div>
-        <h3>Andara Resort Villas, Kamala</h3>
+        <h3><a href="https://www.andaraphuket.com/" target="_blank" rel="noopener">Andara Resort Villas, Kamala</a></h3>
         <div class="dates">6 nights · 4-bedroom Pool Villa × 2</div>
         <div class="conf">Confirmation <strong>556869798</strong></div>
       </div>
@@ -472,13 +502,13 @@ footer .conf { font-family: ui-monospace, Menlo, monospace; }
 
     <h2 style="margin-top:40px">The Courses</h2>
     <div class="hotel-strip">
-      <div class="hotel"><div class="city">Bangkok</div><h3>Nikanti</h3><div class="dates">Best Golf Experience in Asia 2019</div></div>
-      <div class="hotel"><div class="city">Bangkok</div><h3>Alpine Bangkok</h3><div class="dates">Coveted championship layout</div></div>
-      <div class="hotel"><div class="city">Bangkok</div><h3>Robinswood</h3><div class="dates">Reignwood private club</div></div>
-      <div class="hotel"><div class="city">Bangkok</div><h3>Amata Springs</h3><div class="dates">Most luxurious in Asia</div></div>
-      <div class="hotel"><div class="city">Phuket</div><h3>Blue Canyon — Canyon</h3><div class="dates">Johnnie Walker Classic host (×3)</div></div>
-      <div class="hotel"><div class="city">Phuket</div><h3>Red Mountain</h3><div class="dates">Asia's Best Course 2014</div></div>
-      <div class="hotel"><div class="city">Phuket</div><h3>Laguna Phuket</h3><div class="dates">Par-71 lagoon course</div></div>
+      <div class="hotel"><div class="city">Bangkok</div><h3><a href="https://www.nikantigolfclub.com/" target="_blank" rel="noopener">Nikanti</a></h3><div class="dates">Best Golf Experience in Asia 2019</div></div>
+      <div class="hotel"><div class="city">Bangkok</div><h3><a href="https://www.alpinegolfclub.com/" target="_blank" rel="noopener">Alpine Bangkok</a></h3><div class="dates">Coveted championship layout</div></div>
+      <div class="hotel"><div class="city">Bangkok</div><h3><a href="https://robinswoodclub.com/" target="_blank" rel="noopener">Robinswood</a></h3><div class="dates">Reignwood private club</div></div>
+      <div class="hotel"><div class="city">Bangkok</div><h3><a href="https://amataspring.com/" target="_blank" rel="noopener">Amata Springs</a></h3><div class="dates">Most luxurious in Asia</div></div>
+      <div class="hotel"><div class="city">Phuket</div><h3><a href="https://www.bluecanyonphuket.com/bc-golf-course/canyon-course/" target="_blank" rel="noopener">Blue Canyon — Canyon</a></h3><div class="dates">Johnnie Walker Classic host (×3)</div></div>
+      <div class="hotel"><div class="city">Phuket</div><h3><a href="https://www.mbkgolf.com/red-mountain/" target="_blank" rel="noopener">Red Mountain</a></h3><div class="dates">Asia's Best Course 2014</div></div>
+      <div class="hotel"><div class="city">Phuket</div><h3><a href="https://www.lagunagolfphuket.com/" target="_blank" rel="noopener">Laguna Phuket</a></h3><div class="dates">Par-71 lagoon course</div></div>
     </div>
   </section>
 
@@ -538,58 +568,71 @@ const players = [
 /* =================================================================
    ITINERARY — items are 'travel', 'hotel', 'golf', or 'free'.
    Time can be 'TBD' — it'll display gracefully.
+   Optional `url` makes the label a link.
    ================================================================= */
+const URLS = {
+  shangri:    'https://www.shangri-la.com/bangkok/shangrila/',
+  andara:     'https://www.andaraphuket.com/',
+  nikanti:    'https://www.nikantigolfclub.com/',
+  alpine:     'https://www.alpinegolfclub.com/',
+  robinswood: 'https://robinswoodclub.com/',
+  amata:      'https://amataspring.com/',
+  bluecanyon: 'https://www.bluecanyonphuket.com/bc-golf-course/canyon-course/',
+  redmountain:'https://www.mbkgolf.com/red-mountain/',
+  laguna:     'https://www.lagunagolfphuket.com/',
+};
+
 const itinerary = [
   { date: '2027-01-10', items: [
     { type:'travel', time:'TBD', label:'Arrive Bangkok (BKK)', detail:'Private transfer to hotel. Meet driver at exit/entrance 3 (right of customs).' },
-    { type:'hotel',  time:'14:00', label:'Check in: Shangri-La Bangkok', detail:'Deluxe River room. Confirmation 11989740.' },
+    { type:'hotel',  time:'14:00', label:'Check in: Shangri-La Bangkok', url: URLS.shangri, detail:'Deluxe River room. Confirmation 11989740.' },
   ]},
   { date: '2027-01-11', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Buffet included.' },
-    { type:'golf',   time:'TBD', label:'Golf — Nikanti', detail:'Voted Best Golf Experience in Asia 2019. Buffet before & after included.' },
+    { type:'golf',   time:'TBD', label:'Golf — Nikanti', url: URLS.nikanti, detail:'Voted Best Golf Experience in Asia 2019. Buffet before & after included.' },
   ]},
   { date: '2027-01-12', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Buffet included.' },
-    { type:'golf',   time:'TBD', label:'Golf — Alpine Bangkok', detail:'45 min from Suvarnabhumi. Picturesque hilly layout.' },
+    { type:'golf',   time:'TBD', label:'Golf — Alpine Bangkok', url: URLS.alpine, detail:'45 min from Suvarnabhumi. Picturesque hilly layout.' },
   ]},
   { date: '2027-01-13', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Buffet included.' },
-    { type:'golf',   time:'TBD', label:'Golf — Robinswood', detail:'Reignwood\'s exclusive Thailand club, Pathum Thani.' },
+    { type:'golf',   time:'TBD', label:'Golf — Robinswood', url: URLS.robinswood, detail:'Reignwood\'s exclusive Thailand club, Pathum Thani.' },
   ]},
   { date: '2027-01-14', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Buffet included.' },
-    { type:'golf',   time:'TBD', label:'Golf — Amata Springs', detail:'The most luxurious course in Asia.' },
+    { type:'golf',   time:'TBD', label:'Golf — Amata Springs', url: URLS.amata, detail:'The most luxurious course in Asia.' },
   ]},
   { date: '2027-01-15', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at hotel', detail:'Last morning in Bangkok.' },
-    { type:'hotel',  time:'12:00', label:'Check out Shangri-La', detail:'' },
+    { type:'hotel',  time:'12:00', label:'Check out Shangri-La', url: URLS.shangri, detail:'' },
     { type:'travel', time:'TBD', label:'Transfer to BKK airport', detail:'~2hr 15min via private vehicle.' },
     { type:'travel', time:'TBD', label:'Fly BKK → Phuket (HKT)', detail:'~1hr 15min. Domestic flight included.' },
-    { type:'hotel',  time:'TBD', label:'Check in: Andara Resort Villas', detail:'4-bedroom Pool Villa × 2. Confirmation 556869798.' },
+    { type:'hotel',  time:'TBD', label:'Check in: Andara Resort Villas', url: URLS.andara, detail:'4-bedroom Pool Villa × 2. Confirmation 556869798.' },
   ]},
   { date: '2027-01-16', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
-    { type:'golf',   time:'TBD', label:'Golf — Blue Canyon (Canyon)', detail:'Johnnie Walker Classic host 1994, 1998, 2007.' },
+    { type:'golf',   time:'TBD', label:'Golf — Blue Canyon (Canyon)', url: URLS.bluecanyon, detail:'Johnnie Walker Classic host 1994, 1998, 2007.' },
   ]},
   { date: '2027-01-17', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
-    { type:'golf',   time:'TBD', label:'Golf — Red Mountain', detail:'Asia\'s Best Golf Course 2014. No water in carts — coupon for clubhouse.' },
+    { type:'golf',   time:'TBD', label:'Golf — Red Mountain', url: URLS.redmountain, detail:'Asia\'s Best Golf Course 2014. No water in carts — coupon for clubhouse.' },
   ]},
   { date: '2027-01-18', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
-    { type:'golf',   time:'TBD', label:'Golf — Laguna Phuket', detail:'Par-71 lagoon course. Caddy tip 500 THB.' },
+    { type:'golf',   time:'TBD', label:'Golf — Laguna Phuket', url: URLS.laguna, detail:'Par-71 lagoon course. Caddy tip 500 THB.' },
   ]},
   { date: '2027-01-19', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
-    { type:'golf',   time:'TBD', label:'Golf — Blue Canyon (Canyon)', detail:'Second crack at the Canyon Course.' },
+    { type:'golf',   time:'TBD', label:'Golf — Blue Canyon (Canyon)', url: URLS.bluecanyon, detail:'Second crack at the Canyon Course.' },
   ]},
   { date: '2027-01-20', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Buffet included.' },
-    { type:'golf',   time:'TBD', label:'Golf — Red Mountain', detail:'Final round.' },
+    { type:'golf',   time:'TBD', label:'Golf — Red Mountain', url: URLS.redmountain, detail:'Final round.' },
   ]},
   { date: '2027-01-21', items: [
     { type:'hotel',  time:'07:00', label:'Breakfast at villa', detail:'Last morning.' },
-    { type:'hotel',  time:'12:00', label:'Check out Andara', detail:'' },
+    { type:'hotel',  time:'12:00', label:'Check out Andara', url: URLS.andara, detail:'' },
     { type:'travel', time:'TBD', label:'Transfer to HKT airport', detail:'~45min. End of LGTA service.' },
   ]},
 ];
@@ -649,15 +692,20 @@ function renderItinerary() {
   const root = document.getElementById('itinerary-list');
   root.innerHTML = itinerary.map(d => {
     const f = fmtDate(d.date);
-    const items = d.items.map(it => `
-      <div class="item ${it.type}">
-        <div class="time">${it.time}</div>
-        <div>
-          <div class="label">${it.label}</div>
-          ${it.detail ? `<div class="detail">${it.detail}</div>` : ''}
+    const items = d.items.map(it => {
+      const labelHtml = it.url
+        ? `<a href="${it.url}" target="_blank" rel="noopener">${it.label}</a>`
+        : it.label;
+      return `
+        <div class="item ${it.type}">
+          <div class="time">${it.time}</div>
+          <div>
+            <div class="label">${labelHtml}</div>
+            ${it.detail ? `<div class="detail">${it.detail}</div>` : ''}
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
     return `
       <div class="day">
         <div class="date">
